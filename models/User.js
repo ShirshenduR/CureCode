@@ -1,20 +1,20 @@
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const User = require("./models/User");
-const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    const user = await User.findOne({ username });
-    if (!user) return done(null, false, { message: "User not found" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    return isMatch ? done(null, user) : done(null, false, { message: "Incorrect password" });
-  })
-);
-
-passport.serializeUser((user, done) => done(null, user.id));
-passport.deserializeUser(async (id, done) => {
-  const user = await User.findById(id);
-  done(null, user);
+// User Schema
+const UserSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 });
+
+// Hash password before saving
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+const User = mongoose.model("User", UserSchema);
+module.exports = User;

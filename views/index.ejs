@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CureCode - Medical OCR</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to CureCode</h1>
+        <nav>
+            <% if (user) { %>
+                <a href="/users/profile">Profile</a>
+                <a href="/users/logout">Logout</a>
+            <% } else { %>
+                <a href="/users/login">Login</a>
+                <a href="/users/register">Register</a>
+            <% } %>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Upload a Prescription</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="prescription" required>
+            <button type="submit">Upload</button>
+        </form>
+
+        <% if (extractedData) { %>
+            <h2>Extracted Data</h2>
+            <table border="1">
+                <tr>
+                    <th>Medicine</th>
+                    <th>Disease</th>
+                </tr>
+                <% extractedData.forEach(data => { %>
+                    <tr>
+                        <td><%= data.medicine %></td>
+                        <td><%= data.disease %></td>
+                    </tr>
+                <% }) %>
+            </table>
+        <% } %>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CureCode. All rights reserved.</p>
+    </footer>
+</body>
 </html>
