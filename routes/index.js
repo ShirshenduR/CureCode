@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var jwt = require("jsonwebtoken");
 
-// Sample route for homepage
+
 router.get("/", function (req, res) {
   res.render("index", { user: req.user || null, extractedData: null });
 });
