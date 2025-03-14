@@ -5,14 +5,16 @@
 </head>
 <body>
     <h2>Login</h2>
+    <% if (typeof error_msg !== 'undefined') { %>
+        <div class="alert alert-danger"><%= error_msg %></div>
+    <% } %>
+    <% if (typeof success_msg !== 'undefined') { %>
+        <div class="alert alert-success"><%= success_msg %></div>
+    <% } %>
     <form action="/users/login" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" name="email" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" required>
-        <br>
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
         <button type="submit">Login</button>
-    </form>
+    </form>      
 </body>
 </html>

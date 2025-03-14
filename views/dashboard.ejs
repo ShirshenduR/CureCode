@@ -1,0 +1,7 @@
+<% if (typeof success_msg !== 'undefined' && success_msg) { %>
+    <div class="alert alert-success"><%= success_msg %></div>
+<% } %>
+<% if (typeof error_msg !== 'undefined' && error_msg) { %>
+    <div class="alert alert-danger"><%= error_msg %></div>
+<% } %>
+<h2>Welcome, <%= user.name %>!</h2>

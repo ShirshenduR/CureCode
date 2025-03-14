@@ -5,6 +5,9 @@
 </head>
 <body>
     <h2>Register</h2>
+    <% if (typeof error_msg !== 'undefined') { %>
+        <div class="alert alert-danger"><%= error_msg %></div>
+    <% } %>
     <form action="/users/register" method="POST">
         <label>Name:</label>
         <input type="text" name="name" required>
